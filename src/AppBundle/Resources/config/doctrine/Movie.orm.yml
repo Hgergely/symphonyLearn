@@ -1,0 +1,16 @@
+# src/AppBundle/Resources/config/doctrine/Movie.orm.yml
+AppBundle\Entity\Movie:
+    type: entity
+    table: movie
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        title:
+            type: string
+        description:
+            type: string
+        coverImage:
+            type: blob
+            nullable : true

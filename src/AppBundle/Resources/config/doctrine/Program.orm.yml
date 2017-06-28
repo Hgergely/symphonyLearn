@@ -1,0 +1,11 @@
+# src/AppBundle/Resources/config/doctrine/Product.orm.yml
+AppBundle\Entity\Program:
+    type: entity
+    table: program
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string

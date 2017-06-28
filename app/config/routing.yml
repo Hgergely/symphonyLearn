@@ -1,0 +1,24 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+index:
+    path:     /index
+    defaults: { _controller: AppBundle:Movie:index }
+
+index:
+    path:     /index/index
+    defaults: { _controller: AppBundle:Program:index }
+
+create:
+    path:     /index/create
+    defaults: { _controller: AppBundle:Movie:create }
+
+show:
+    path:     /index/show/{movieId}
+    defaults: { _controller: AppBundle:Movie:show }
+
+
+new:
+    path:     /index/new/
+    defaults: { _controller: AppBundle:Movie:new }
