@@ -12,8 +12,10 @@ var env = "prod";
 //JAVASCRIPT TASK: write one minified js file out of jquery.js, bootstrap.js and all of my custom js files
 gulp.task('js', function () {
     return gulp.src(['bower_components/jquery/dist/jquery.js',
+        'bower_components/tether/dist/js/tether.js',
         'bower_components/bootstrap/dist/js/bootstrap.js',
-        'src/AppBundle/Resources/public/js/**/*.js'])
+
+        'src/AppBundle/Resources/public/js/*.js'])
         .pipe(concat('javascript.js'))
         .pipe(gulpif(env === 'prod', uglify()))
         .pipe(sourcemaps.write('./'))
@@ -24,7 +26,8 @@ gulp.task('js', function () {
 gulp.task('css', function () {
     return gulp.src([
         'bower_components/bootstrap/dist/css/bootstrap.css',
-        'src/AppBundle/Resources/public/less/**/*.less'])
+        'src/AppBundle/Resources/public/less/*.less',
+        'src/AppBundle/Resources/public/css/*.css'])
         .pipe(gulpif(/[.]less/, less()))
         .pipe(concat('styles.css'))
         .pipe(gulpif(env === 'prod', uglifycss()))

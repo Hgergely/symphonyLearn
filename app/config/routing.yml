@@ -21,4 +21,4 @@ show:
 
 new:
     path:     /index/new/
-    defaults: { _controller: AppBundle:Movie:new }
+    defaults: { _controller: AppBundle:Movie:movies }

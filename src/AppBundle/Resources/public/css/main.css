@@ -1,3 +1,56 @@
 body{
     padding: 10px;
+    padding-top: 5rem;
+}
+
+.orange {
+    color: darkorange !important;
+}
+
+
+.starter-template {
+    padding: 3rem 1.5rem;
+}
+
+
+.formRow{
+
+    margin-bottom: 10px;
+    line-height: 30px;
+
+}
+
+.formData{
+    min-width: 300px;
+}
+
+.listHeading{
+
+    background-color: #828282;
+    color: white;
+    height: 40px;
+    line-height: 40px;
+
+}
+
+.listRow{
+
+    border-bottom: 1px solid #e2e2e2;
+    min-height: 35px;
+    line-height: 35px;
+
+}
+
+.hidden{
+    display: none;
+}
+
+
+.btn-primary-green {
+    color: #fff;
+    background-color: darkorange;
+}
+
+.navbar-brand {
+    margin-right: 4em;
 }
