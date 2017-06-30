@@ -14,3 +14,5 @@ AppBundle\Entity\Movie:
         coverImage:
             type: blob
             nullable : true
+        duration:
+            type: integer

@@ -40,6 +40,17 @@
             </div>
 
         </div>
+        <div class="row">
+            <div class="col formRow">
+                {{ form_label(form.duration, 'Duration', {'label_attr': {'class': 'formLabel'}}) }}
+
+            </div>
+            <div class="col formRow">
+                {{ form_widget(form.duration, {'attr': {'class': 'formData'}}) }}
+
+            </div>
+
+        </div>
         <div class="row text-right">
             <div class="col text-right  formRow">
 
@@ -68,6 +79,14 @@
             <strong>Description</strong>
         </div>
 
+        <div class="col text-uppercase">
+            <strong>Duration</strong>
+        </div>
+
+        <div class="col text-uppercase">
+
+        </div>
+
     </div>
 
     {% for movie in allMovies %}
@@ -79,7 +98,13 @@
             <div class="col">
                 {{ movie.description }}
             </div>
+            <div class="col">
+                {{ movie.duration }} min
+            </div>
 
+            <div class="col text-center">
+                <div class="deleteMovie" refId="{{ movie.id }}">&#10006;</div>
+            </div>
         </div>
 
     {% endfor %}

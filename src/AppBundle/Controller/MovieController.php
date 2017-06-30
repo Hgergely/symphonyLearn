@@ -17,36 +17,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MovieController extends Controller
 {
 
-    public function indexAction()
-    {
-        return $this->render('movie/index.html.twig', array(
-        ));
-    }
-
-//    public function createAction()
-//    {
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $movie = new Movie();
-//        $movie->setTitle('Men in Black')
-//              ->setDescription("Two man against the monsters");
-//
-//        // tells Doctrine you want to (eventually) save the Product (no queries yet)
-//        $em->persist($movie);
-//
-//        // actually executes the queries (i.e. the INSERT query)
-//        $em->flush();
-//
-//        return new Response('Saved new product with id '.$movie->getId());
-//    }
-
-    public function moviesAction(Request $request)
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function indexAction(Request $request)
     {
 
         $movie = new Movie();
@@ -90,13 +73,48 @@ class MovieController extends Controller
          * Passing all to be rendered
          */
 
-        return $this->render('movie/new.html.twig', array(
-            'form' => $form->createView(),
-            'allMovies' => $allMovies,
-            'insertResult' => $insertResult
+        return $this->render('movie/index.html.twig', array(
+            "form" => $form->createView(),
+            "allMovies" => $allMovies,
+            "insertResult" => $insertResult,
+            "RequestPath"=>$request->getRequestUri()
         ));
     }
 
+    /**
+     * @param $movieId
+     * @return JsonResponse
+     */
+    public function deleteAction($movieId){
+
+        $em = $this->getDoctrine()->getManager();
+        $movie = $em->getRepository('AppBundle:Movie')->find($movieId);
+
+        if (!$movie) {
+            return new JsonResponse(
+                        array(  "success" => "false",
+                                "message"=>"this entity is not found",
+                                "refId"=>$movieId));
+        }
+
+        try{
+            $em->remove($movie);
+            $em->flush();
+        }catch(Exception $e){
+            return new JsonResponse(
+                        array(
+                                'success' => "false",
+                                "refId"=>$movieId));
+        }
+
+        return new JsonResponse(array('success' => "true", "refId"=>$movieId));
+
+    }
+
+    /**
+     * @param Movie $movie
+     * @return mixed
+     */
     function initNewForm(Movie $movie){
 
         return $this->createFormBuilder($movie)
@@ -104,10 +122,14 @@ class MovieController extends Controller
             // If you use PHP 5.3 or 5.4 you must use
             // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
             ->add('description', TextareaType::class)
+            ->add('duration', IntegerType::class)
             ->add('save', SubmitType::class, array('label' => 'Save movie'))
             ->getForm();
     }
 
+    /**
+     * @return array
+     */
     function getAll(){
 
         return $this->getDoctrine()

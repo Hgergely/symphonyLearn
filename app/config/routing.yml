@@ -2,23 +2,37 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
-index:
-    path:     /index
-    defaults: { _controller: AppBundle:Movie:index }
+AppBundle:
+    resource: '@AppBundle/Controller/'
+    type:     annotation
+    prefix:   /app
 
-index:
-    path:     /index/index
-    defaults: { _controller: AppBundle:Program:index }
-
-create:
-    path:     /index/create
-    defaults: { _controller: AppBundle:Movie:create }
-
-show:
-    path:     /index/show/{movieId}
-    defaults: { _controller: AppBundle:Movie:show }
+# redirecting the root
+root:
+    path: /
+    defaults:
+        _controller: AppBundle:Movie:index
+        path: /app
+        permanent: true
 
 
-new:
-    path:     /index/new/
-    defaults: { _controller: AppBundle:Movie:movies }
+movieDelete:
+    path:     /movie/delete/{movieId}
+    defaults: { _controller: AppBundle:Movie:delete }
+
+#index:
+#    path:     /index/index
+#    defaults: { _controller: AppBundle:Program:index }
+#
+#create:
+#    path:     /index/create
+#    defaults: { _controller: AppBundle:Movie:create }
+#
+#show:
+#    path:     /index/show/{movieId}
+#    defaults: { _controller: AppBundle:Movie:show }
+#
+#
+#new:
+#    path:     /index/new/
+#    defaults: { _controller: AppBundle:Movie:movies }

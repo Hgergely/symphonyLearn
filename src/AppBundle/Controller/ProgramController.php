@@ -10,8 +10,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Program;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,34 +21,19 @@ class ProgramController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return new Response(
-            '<html><body>Index</body></html>'
+        return $this->render('program/index.html.twig',
+                array(
+                    "RequestPath"=>$request->getRequestUri()
+                )
         );
-    }
-
-    public function createAction()
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $program = new Program();
-        $program->setName('Men in Black');
-
-
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $em->persist($program);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $em->flush();
-
-        return new Response('Saved new product with id '.$program->getId());
     }
 
  //if you have multiple entity managers, use the registry to fetch them
     public function editAction(ManagerRegistry $doctrine)
     {
+
         $em = $doctrine->getManager();
         $em2 = $doctrine->getManager('other_connection');
 

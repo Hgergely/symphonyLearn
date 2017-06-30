@@ -54,3 +54,7 @@ body{
 .navbar-brand {
     margin-right: 4em;
 }
+
+.deleteMovie{
+    cursor: pointer;
+}

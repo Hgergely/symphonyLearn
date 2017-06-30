@@ -41,6 +41,11 @@ class Movie
      */
     private $coverImage;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $duration;
+
 
     /**
      * Get id
@@ -119,5 +124,28 @@ class Movie
     public function getCoverImage()
     {
         return $this->coverImage;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     * @return Movie
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }
