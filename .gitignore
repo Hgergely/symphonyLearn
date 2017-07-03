@@ -13,6 +13,7 @@
 test.txt
 /node_modules/
 /bower_components/
+/idea/
 
 
 

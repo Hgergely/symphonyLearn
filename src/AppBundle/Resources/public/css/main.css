@@ -21,7 +21,7 @@ body{
 }
 
 .formData{
-    min-width: 300px;
+
 }
 
 .listHeading{
@@ -71,4 +71,9 @@ body{
 #form_datetime>div{
     float: left;
     margin-right: 5px;
+}
+
+select{
+    height: 30px;
+    margin-right: 6px
 }

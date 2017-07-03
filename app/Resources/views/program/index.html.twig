@@ -6,46 +6,53 @@
     {% if insertResult == 1 %}
         <div class="alert alert-success  in alert-dismissable" style="margin-top:18px;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Success!</strong> The new movie has been successfully added.
+            <strong>Success!</strong> The program has been successfully added.
         </div>
     {% endif %}
 
 
-    <div id="addNewSection" class="col-lg-12 ">
+    <div id="addNewSection" class="container">
 
-        <h4>Set new program </h4>
+        <div class="row formRow">
+            <div class="text-center col">
+                <h4>Set new program </h4>
+            </div>
+        </div>
+
         {{ form_start(form) }}
         {{ form_errors(form) }}
 
-        <div class="row ">
+        <div class="row formRow">
 
-            <div class="col">
-                <div class="col formProgramRow">
+            <div class="col col-sm-12 col-md-12 col-lg-6">
+                <div class="col formRow">
                     {{ form_label(form.movie, 'Movie', {'label_attr': {'class': 'formLabel'}}) }}
 
                 </div>
-                <div class="col formProgramRow">
+                <div class="col formRow">
                     {{ form_widget(form.movie, {'attr': {'class': 'formData'}}) }}
 
                 </div>
             </div>
 
-            <div class="col">
-                <div class="col formProgramRow">
+            <div class="col  col-sm-12 col-md-12 col-lg-6">
+                <div class="col formRow">
                     {{ form_label(form.datetime, 'Date and TIme', {'label_attr': {'class': 'formLabel'}}) }}
 
                 </div>
-                <div class="col formProgramRow">
+                <div class="col formRow">
                     {{ form_widget(form.datetime, {'attr': {'class': 'formData'}}) }}
 
                 </div>
             </div>
+        </div>
 
-            <div class=" formProgramRow">
+        <div class="row formRow">
+            <div class="col text-center col-sm-12 col-md-12 formProgramRow">
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary-green'}}) }}
 
             </div>
-
+        </div>
         </div>
 
         <hr>
