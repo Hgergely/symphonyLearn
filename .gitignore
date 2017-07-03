@@ -11,6 +11,7 @@
 /bin/
 /composer.phar
 test.txt
-/node_modules
+/node_modules/
+
 
 
