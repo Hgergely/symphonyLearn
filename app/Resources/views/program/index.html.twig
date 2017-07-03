@@ -3,11 +3,55 @@
 {% block body %}
 
 
-    movie attach
+    {% if insertResult == 1 %}
+        <div class="alert alert-success  in alert-dismissable" style="margin-top:18px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            <strong>Success!</strong> The new movie has been successfully added.
+        </div>
+    {% endif %}
 
-    Program display
 
-    program edit
+    <div id="addNewSection" class="col-lg-12 ">
+
+        <h4>Set new program </h4>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="row ">
+
+            <div class="col">
+                <div class="col formProgramRow">
+                    {{ form_label(form.movie, 'Movie', {'label_attr': {'class': 'formLabel'}}) }}
+
+                </div>
+                <div class="col formProgramRow">
+                    {{ form_widget(form.movie, {'attr': {'class': 'formData'}}) }}
+
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="col formProgramRow">
+                    {{ form_label(form.datetime, 'Date and TIme', {'label_attr': {'class': 'formLabel'}}) }}
+
+                </div>
+                <div class="col formProgramRow">
+                    {{ form_widget(form.datetime, {'attr': {'class': 'formData'}}) }}
+
+                </div>
+            </div>
+
+            <div class=" formProgramRow">
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary-green'}}) }}
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}
 

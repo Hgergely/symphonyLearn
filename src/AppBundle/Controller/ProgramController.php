@@ -14,6 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Program;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\DateTime;
+
+
+use AppBundle\Controller\MovieController;
+
 class ProgramController extends Controller
 {
 
@@ -23,38 +31,104 @@ class ProgramController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('program/index.html.twig',
-                array(
-                    "RequestPath"=>$request->getRequestUri()
-                )
-        );
-    }
 
- //if you have multiple entity managers, use the registry to fetch them
-    public function editAction(ManagerRegistry $doctrine)
-    {
 
-        $em = $doctrine->getManager();
-        $em2 = $doctrine->getManager('other_connection');
+        $insertResult=null;
+        $program = new Program();
 
-    }
+        $form =$this->initNewForm($program);
+        $form->handleRequest($request);
 
-    public function showAction($productId)
-    {
 
-        $program = $this->getDoctrine()
-            ->getRepository('AppBundle:Program')
-            ->find($productId);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        if (!$program) {
-//            throw $this->createNotFoundException(
-//                'No product found for id '.$productId
-//            );
+            // $form->getData() holds the submitted values
 
-            return new Response('Cant find the program with the given ID : '.$productId);
+            try {
+
+
+                $post=$form->getData();
+
+
+                echo "<pre>";
+                print_r($program);
+                echo "</pre>";
+
+                echo "<pre>";
+                print_r($post);
+                echo "</pre>";
+
+                //$program->setDatetime($post->datetime);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($program);
+                $em->flush();
+            } catch(\Doctrine\DBAL\DBALException $e) {
+
+                $insertResult=false;
+
+            }
+
+            $insertResult=true;
+
+            //init empty form
+            $program = new Program();
+            $form =$this->initNewForm($program);
+
         }
 
-        return new Response('Name of the Program is '.$program->getName());
+
+
+        return $this->render('program/index.html.twig', array(
+            "form" => $form->createView(),
+            "insertResult" => $insertResult,
+            "RequestPath"=>$request->getRequestUri()
+        ));
     }
+
+    function allMoviesChoice(){
+        $movies = $this->getDoctrine()
+            ->getRepository('AppBundle:Movie')
+            ->findAll();
+
+        $moviesArray = [];
+        foreach($movies as $moviesKey => $movie){
+
+            $moviesArray[$movie->getId()] = $movie->getTitle();
+
+        }
+
+        return $moviesArray;
+    }
+
+    function initNewForm(Program $program){
+
+        return $this->createFormBuilder($program)
+            ->add('movie', ChoiceType::class, array(
+                'choices'  => $this->allMoviesChoice()))
+            ->add('datetime', DateTimeType::class)
+            ->add('save', SubmitType::class, array('label' => 'Add Program'))
+            ->getForm();
+
+
+    }
+
+//    public function showAction($productId)
+//    {
+//
+//        $program = $this->getDoctrine()
+//            ->getRepository('AppBundle:Program')
+//            ->find($productId);
+//
+//        if (!$program) {
+////            throw $this->createNotFoundException(
+////                'No product found for id '.$productId
+////            );
+//
+//            return new Response('Cant find the program with the given ID : '.$productId);
+//        }
+//
+//        return new Response('Name of the Program is '.$program->getName());
+//    }
 
 }

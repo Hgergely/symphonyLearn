@@ -1,11 +1,30 @@
-# src/AppBundle/Resources/config/doctrine/Product.orm.yml
 AppBundle\Entity\Program:
     type: entity
     table: program
+    indexes:
+        movie_id:
+            columns:
+                - movie_id
     id:
         id:
             type: integer
-            generator: { strategy: AUTO }
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
     fields:
-        name:
-            type: string
+        datetime:
+            type: datetime
+            nullable: true
+    manyToOne:
+        movie:
+            targetEntity: Movie
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                movie_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

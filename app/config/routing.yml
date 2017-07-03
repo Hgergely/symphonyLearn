@@ -16,9 +16,14 @@ root:
         permanent: true
 
 
+program:
+    path:     /program
+    defaults: { _controller: AppBundle:Program:index }
+
 movieDelete:
     path:     /movie/delete/{movieId}
     defaults: { _controller: AppBundle:Movie:delete }
+
 
 #index:
 #    path:     /index/index

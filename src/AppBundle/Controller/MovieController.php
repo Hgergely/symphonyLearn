@@ -44,7 +44,6 @@ class MovieController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $form->getData() holds the submitted values
-
             try {
 
                 $em = $this->getDoctrine()->getManager();
@@ -111,6 +110,8 @@ class MovieController extends Controller
 
     }
 
+
+
     /**
      * @param Movie $movie
      * @return mixed
@@ -130,7 +131,7 @@ class MovieController extends Controller
     /**
      * @return array
      */
-    function getAll(){
+    public function getAll(){
 
         return $this->getDoctrine()
             ->getRepository('AppBundle:Movie')

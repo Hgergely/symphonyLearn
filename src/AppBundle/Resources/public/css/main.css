@@ -41,6 +41,11 @@ body{
 
 }
 
+.formProgramRow{
+    
+    line-height: 36px;
+}
+
 .hidden{
     display: none;
 }
@@ -57,4 +62,13 @@ body{
 
 .deleteMovie{
     cursor: pointer;
+}
+
+.form_datetime_date>select{
+    margin-right: 5px;
+}
+
+#form_datetime>div{
+    float: left;
+    margin-right: 5px;
 }

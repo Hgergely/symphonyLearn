@@ -1,50 +1,54 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gergely Hajcsak
- * Date: 28/06/2017
- * Time: 08:23
- */
 
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
- * @ORM\Entity
+ * Movie
+ *
  * @ORM\Table(name="movie")
+ * @ORM\Entity
  */
 class Movie
 {
-
     /**
-     * @ORM\Column(type="integer")
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="blob")
+     * @var string
+     *
+     * @ORM\Column(name="cover_image", type="blob", nullable=true)
      */
     private $coverImage;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var integer
+     *
+     * @ORM\Column(name="duration", type="integer", nullable=false)
      */
     private $duration;
+
 
 
     /**

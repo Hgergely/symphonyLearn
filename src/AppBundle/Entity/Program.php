@@ -1,29 +1,48 @@
 <?php
 
+namespace AppBundle\Entity;
 
-    // src/AppBundle/Entity/Product.php
-    namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
-    use Doctrine\ORM\Mapping as ORM;
+/**
+ * Program
+ *
+ * @ORM\Table(name="program", indexes={@ORM\Index(name="movie_id", columns={"movie_id"})})
+ * @ORM\Entity
+ */
+class Program
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
     /**
-    * @ORM\Entity
-    * @ORM\Table(name="product")
-    */
-    class Program
-    {
-        /**
-        * @ORM\Column(type="integer")
-        * @ORM\Id
-        * @ORM\GeneratedValue(strategy="AUTO")
-        */
-        private $id;
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datetime", type="datetime", nullable=true)
+     */
+    private $datetime;
 
-        /**
-        * @ORM\Column(type="text")
-        */
-        private $name;
-    
+    /**
+     * @var \AppBundle\Entity\Movie
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Movie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
+     * })
+     */
+    private $movie;
+
+    public function __construct()
+    {
+        $this->datetime = new \DateTime();
+    }
+
     /**
      * Get id
      *
@@ -35,25 +54,48 @@
     }
 
     /**
-     * Set name
+     * Set datetime
      *
-     * @param string $name
+     * @param \DateTime $datetime
      * @return Program
      */
-    public function setName($name)
+    public function setDatetime($datetime)
     {
-        $this->name = $name;
+        $this->datetime = $datetime;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get datetime
      *
-     * @return string 
+     * @return \DateTime 
      */
-    public function getName()
+    public function getDatetime()
     {
-        return $this->name;
+        return $this->datetime;
+    }
+
+    /**
+     * Set movie
+     *
+     * @param \AppBundle\Entity\Movie $movie
+     * @return Program
+     */
+    public function setMovie(\AppBundle\Entity\Movie $movie = null)
+    {
+        $this->movie = $movie;
+
+        return $this;
+    }
+
+    /**
+     * Get movie
+     *
+     * @return \AppBundle\Entity\Movie 
+     */
+    public function getMovie()
+    {
+        return $this->movie;
     }
 }
