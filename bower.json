@@ -1,0 +1,21 @@
+{
+  "name": "gulp_for_symphony",
+  "description": "cinema ======",
+  "main": "gulpfile.js",
+  "authors": [
+    "Gergely Hajcsak <gergely.hajcsak@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Hgergely/symphonyLearn",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "4.0",
+    "jquery": "^3.2.1"
+  }
+}
