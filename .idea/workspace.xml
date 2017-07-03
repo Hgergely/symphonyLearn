@@ -61,8 +61,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+            <state relative-caret-position="204">
+              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -161,8 +161,8 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ProgramController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Program.php" />
         <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -327,12 +327,12 @@
       <workItem from="1498630919669" duration="34023000" />
       <workItem from="1498804295824" duration="21508000" />
       <workItem from="1499081909783" duration="837000" />
-      <workItem from="1499085300792" duration="2421000" />
+      <workItem from="1499085300792" duration="2596000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63142000" />
+    <option name="totallyTimeSpent" value="63317000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1066" extended-state="6" />
@@ -693,8 +693,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
