@@ -28,6 +28,9 @@ movieDetails:
     path:     /movie/details/{movieId}
     defaults: { _controller: AppBundle:Movie:details }
 
+programPartial :
+    path:     /program/programPartial/{weekOffset}
+    defaults: { _controller: AppBundle:Program:programPartial }
 #index:
 #    path:     /index/index
 #    defaults: { _controller: AppBundle:Program:index }

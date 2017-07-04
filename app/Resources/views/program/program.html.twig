@@ -1,0 +1,70 @@
+{# app/Resources/views/movie/new.html.twig #}
+
+    <div class="container">
+
+        <div class="row ">
+            <div class="float-left col-6">
+                <button offset="{{ offset-1 }}" type="button" class=" WeekChange btn btn-secondary">Prev Week</button>
+            </div>
+            <div class="float-right text-right col-6">
+                <button offset="{{ offset+1 }}" type="button" class="WeekChange btn btn-secondary">Next Week</button>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row ">
+            {% set counter = 0 %}
+            {% for day in weekdays %}
+                <div class="seven" style="">
+
+                    <div class="seven text-center prgramHeader">
+                        {{ day.display }}
+                    </div>
+                    <div style="position: relative;">
+                        <div  class="seven text-left prgramCoulomnBackGround">
+
+                            {% for x in 8..24 %}
+                                <div class="hourLine" >
+                                    {% if  counter == 0 %}
+                                        <div class="timeCaption" >
+                                            {{ x }}:00
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                        <div class="seven text-left prgramCoulomn">
+
+                            {% for program in programs %}
+
+
+                                {% if  day.display == program.datetime.format('Y-m-d') %}
+                                    {%  set duration = program.datetime.format('H')*30 + program.datetime.format('i')/2 - 240 %}
+                                    <div class="program" refId="{{ program.movie.getId() }}"
+                                         style=" position: absolute;
+                                                 height:  {{ program.movie.getDuration()/2 }}px;
+                                                 top: {{ duration }}px;">
+
+                                        <div style="float:left; padding: 1px;  font-size: 0.7vw;">
+                                            <strong>{{ program.movie.getTitle() }}</strong>
+                                            ({{ program.datetime.format("H:i") }})
+                                            {{ program.movie.getDuration() }} min
+                                        </div>
+
+
+                                    </div>
+
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% set counter = counter+1 %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+

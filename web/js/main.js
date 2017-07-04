@@ -26,16 +26,16 @@ $(document).ready(function(){
         })
     })
 
-    $(".program").on("click",function(){
+    $(document).on("click",".WeekChange",function(){
 
-        var refId = $(this).attr("refId")
+        var offset = $(this).attr("offset")
         $.ajax({
             type: "GET",
-            url: "/movie/details/" + refId,
+            url: "/program/programPartial/" + offset,
             success: function (data, dataType) {
 
-                $(".listRow[refId="+refId+"]").slideUp()
-                console.log("success")
+                $("#programWrapper").html(data)
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -44,7 +44,28 @@ $(document).ready(function(){
 
         })
 
-        $("#myModal").modal('show');
+    })
+
+    $(document).on("click",".program",function(){
+
+        var refId = $(this).attr("refId")
+        $.ajax({
+            type: "GET",
+            url: "/movie/details/" + refId,
+            success: function (data, dataType) {
+
+               $("#myModal").html(data);
+               $("#myModal").modal('show');
+
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('Error : ' + errorThrown);
+            }
+
+        })
+
+
     })
 
 

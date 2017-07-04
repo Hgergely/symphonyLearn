@@ -61,31 +61,52 @@ class ProgramController extends Controller
         }
 
 
-        $currentweekArray=[];
-
-        $baseDate=  strtotime('monday this week');
-
-        for ($i=0;$i<=6;$i++){
-
-            $currentweekArray[]=[
-                                "timestamp"=>$baseDate,
-                                "display" => date("Y-m-d",$baseDate)
-                            ];
-            $baseDate = strtotime('+1 day', $baseDate);
-
-        }
-
-
+        $currentweekArray = $this->getWeekDays(-1);
 
         return $this->render('program/index.html.twig', array(
             "form" => $form->createView(),
             "insertResult" => $insertResult,
             "RequestPath"=>$request->getRequestUri(),
             "programs"=>$this->getAll(),
-            "weekdays"=>$currentweekArray
+            "weekdays"=>$currentweekArray,
+            "offset"=>-1
+
         ));
     }
 
+    public function programPartialAction($weekOffset){
+
+        $currentweekArray = $this->getWeekDays($weekOffset);
+
+        return $this->render('program/partial_program.html.twig', array(
+            "programs"=>$this->getAll(),
+            "weekdays"=>$currentweekArray,
+            "offset"=>$weekOffset
+        ));
+
+    }
+
+    /**
+     * @param $weekOffset
+     * @return array
+     */
+    function getWeekDays($weekOffset){
+
+        $currentweekArray=[];
+        $baseDate=  strtotime($weekOffset.' week monday');
+
+        for ($i=0;$i<=6;$i++){
+
+            $currentweekArray[]=[
+                "timestamp"=>$baseDate,
+                "display" => date("Y-m-d",$baseDate)
+            ];
+            $baseDate = strtotime('+1 day', $baseDate);
+
+        }
+
+        return $currentweekArray;
+    }
     /**
      * @return array
      */
