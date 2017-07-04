@@ -24,6 +24,9 @@ movieDelete:
     path:     /movie/delete/{movieId}
     defaults: { _controller: AppBundle:Movie:delete }
 
+movieDetails:
+    path:     /movie/details/{movieId}
+    defaults: { _controller: AppBundle:Movie:details }
 
 #index:
 #    path:     /index/index

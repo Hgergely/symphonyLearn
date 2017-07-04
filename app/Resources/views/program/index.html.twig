@@ -30,18 +30,18 @@
 
                 </div>
                 <div class="col formRow">
-                    {{ form_widget(form.movie, {'attr': {'class': 'formData'}}) }}
+                    {{ form_widget(form.movie, {'attr': {'class': 'formElements'}}) }}
 
                 </div>
             </div>
 
             <div class="col  col-sm-12 col-md-12 col-lg-6">
                 <div class="col formRow">
-                    {{ form_label(form.datetime, 'Date and TIme', {'label_attr': {'class': 'formLabel'}}) }}
+                    {{ form_label(form.datetime) }}
 
                 </div>
                 <div class="col formRow">
-                    {{ form_widget(form.datetime, {'attr': {'class': 'formData'}}) }}
+                    {{ form_widget(form.datetime) }}
 
                 </div>
             </div>
@@ -59,6 +59,66 @@
 
         {{ form_end(form) }}
     </div>
+
+<div class="container">
+
+    <div class="row ">
+        {% set counter = 0 %}
+        {% for day in weekdays %}
+            <div class="seven" style="">
+
+                <div class="seven text-center prgramHeader">
+                    {{ day.display }}
+                </div>
+                <div style="position: relative;">
+                    <div  class="seven text-left prgramCoulomnBackGround">
+
+                        {% for x in 8..24 %}
+                            <div class="hourLine" >
+                                {% if  counter == 0 %}
+                                    <div class="timeCaption" >
+                                        {{ x }}:00
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    <div class="seven text-left prgramCoulomn">
+
+                        {% for program in programs %}
+
+
+                            {% if  day.display == program.datetime.format('Y-m-d') %}
+                                {%  set duration = program.datetime.format('H')*30 + program.datetime.format('i')/2 - 240 %}
+                                <div class="program" refId="{{ program.movie.getId() }}" style="position: absolute; height:  {{ program.movie.getDuration()/2 }}px; top: {{ duration }}px;">
+
+                                    <div style="float:left; padding: 1px;  font-size: 0.7vw;">
+                                        <strong>{{ program.movie.getTitle() }}</strong>
+                                            ({{ program.datetime.format("H:i") }})
+                                            {{ program.movie.getDuration() }} min
+                                    </div>
+
+
+                                </div>
+
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% set counter = counter+1 %}
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+    <div id="myModal" class="modal fade">
+
+    </div>
+
 
 {% endblock %}
 

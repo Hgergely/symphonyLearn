@@ -119,13 +119,24 @@ class MovieController extends Controller
     function initNewForm(Movie $movie){
 
         return $this->createFormBuilder($movie)
-            ->add('title', TextType::class)
-            // If you use PHP 5.3 or 5.4 you must use
-            // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-            ->add('description', TextareaType::class)
-            ->add('duration', IntegerType::class)
+            ->add('title', TextType::class,  array('label' => 'Title', 'attr' => array('class' => 'formElements ')))
+            ->add('description', TextareaType::class, array('label' => 'Description', 'attr' => array('class' => 'formElements')))
+            ->add('duration', IntegerType::class, array('label' => 'Duration', 'attr' => array('class' => 'formElements')))
             ->add('save', SubmitType::class, array('label' => 'Save movie'))
             ->getForm();
+    }
+
+
+    public function detailsAction($movieId){
+
+        $em = $this->getDoctrine()->getManager();
+        $movie = $em->getRepository('AppBundle:Movie')->find($movieId);
+
+        return $this->render('movie/details.html.twig', array(
+           "movie" => $movie,
+
+        ));
+
     }
 
     /**

@@ -32,7 +32,6 @@ class ProgramController extends Controller
     public function indexAction(Request $request)
     {
 
-
         $insertResult=null;
         $program = new Program();
 
@@ -62,22 +61,60 @@ class ProgramController extends Controller
         }
 
 
+        $currentweekArray=[];
+
+        $baseDate=  strtotime('monday this week');
+
+        for ($i=0;$i<=6;$i++){
+
+            $currentweekArray[]=[
+                                "timestamp"=>$baseDate,
+                                "display" => date("Y-m-d",$baseDate)
+                            ];
+            $baseDate = strtotime('+1 day', $baseDate);
+
+        }
+
+
 
         return $this->render('program/index.html.twig', array(
             "form" => $form->createView(),
             "insertResult" => $insertResult,
-            "RequestPath"=>$request->getRequestUri()
+            "RequestPath"=>$request->getRequestUri(),
+            "programs"=>$this->getAll(),
+            "weekdays"=>$currentweekArray
         ));
     }
 
-    function allMoviesChoice(){
-        $movies = $this->getDoctrine()
-            ->getRepository('AppBundle:Movie')
+    /**
+     * @return array
+     */
+    public function getAll(){
+        $allProgram =  $this->getDoctrine()
+            ->getRepository('AppBundle:Program')
             ->findAll();
 
-        return $movies;
+//        echo "<pre>";
+//        print_r($allProgram);
+//        echo "</pre>";
+
+        return $allProgram;
     }
 
+
+    /**
+     * @return array
+     */
+    function allMoviesChoice(){
+        return $this->getDoctrine()
+            ->getRepository('AppBundle:Movie')
+            ->findAll();
+    }
+
+    /**
+     * @param Program $program
+     * @return mixed
+     */
     function initNewForm(Program $program){
 
         return $this->createFormBuilder($program)
@@ -85,30 +122,10 @@ class ProgramController extends Controller
             ->add('movie', EntityType::class, array(
                 'class' => 'AppBundle:Movie',
                 'choice_label' => 'title',
-            ))
+                ))
             ->add('datetime', DateTimeType::class)
             ->add('save', SubmitType::class, array('label' => 'Add Program'))
             ->getForm();
-
-
     }
-
-//    public function showAction($productId)
-//    {
-//
-//        $program = $this->getDoctrine()
-//            ->getRepository('AppBundle:Program')
-//            ->find($productId);
-//
-//        if (!$program) {
-////            throw $this->createNotFoundException(
-////                'No product found for id '.$productId
-////            );
-//
-//            return new Response('Cant find the program with the given ID : '.$productId);
-//        }
-//
-//        return new Response('Name of the Program is '.$program->getName());
-//    }
 
 }
