@@ -152,4 +152,8 @@ class Movie
     {
         return $this->duration;
     }
+
+    public  function  getLabel(){
+        return $this->title . " (" . $this->duration." min)";
+    }
 }

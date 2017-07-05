@@ -74,46 +74,48 @@
     <br>
     {#Rendering Movies List   #}
 
-    <div class="row col-lg-12 listHeading">
-        <div class="col text-uppercase">
-            <strong>Title</strong>
+    <div class="container">
+        <div class="row col-lg-12 listHeading">
+            <div class="col text-uppercase">
+                <strong>Title</strong>
+            </div>
+
+            <div class="col text-uppercase">
+                <strong>Description</strong>
+            </div>
+
+            <div class="col text-uppercase">
+                <strong>Duration</strong>
+            </div>
+
+            <div class="col text-uppercase">
+            </div>
+
         </div>
 
-        <div class="col text-uppercase">
-            <strong>Description</strong>
-        </div>
 
-        <div class="col text-uppercase">
-            <strong>Duration</strong>
-        </div>
+        {% for movie in allMovies %}
+            <div class="row col-lg-12 listRow" refId="{{ movie.id }}">
+                <div class="col">
+                    {{ movie.title }}
+                </div>
 
-        <div class="col text-uppercase">
+                <div class="col">
+                    {{ movie.description }}
+                </div>
 
-        </div>
 
+                <div class="col">
+                    {{ movie.duration }} min
+                </div>
+
+                <div class="col text-center">
+                    <div class="deleteMovie orange" refId="{{ movie.id }}">&#10006;</div>
+                </div>
+            </div>
+
+        {% endfor %}
     </div>
-
-    {% for movie in allMovies %}
-        <div class="row col-lg-12 listRow" refId="{{ movie.id }}">
-            <div class="col">
-                {{ movie.title }}
-            </div>
-
-            <div class="col">
-                {{ movie.description }}
-            </div>
-
-
-            <div class="col">
-                {{ movie.duration }} min
-            </div>
-
-            <div class="col text-center">
-                <div class="deleteMovie orange" refId="{{ movie.id }}">&#10006;</div>
-            </div>
-        </div>
-
-    {% endfor %}
 
 
 

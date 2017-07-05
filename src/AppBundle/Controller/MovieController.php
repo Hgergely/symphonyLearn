@@ -12,15 +12,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Subscription;
+
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class MovieController extends Controller
 {
@@ -31,6 +35,10 @@ class MovieController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+//        var_dump($locale = $request->getLocale());
+//        echo $translated = $this->get('translator')->trans('Set new program');
+//
 
         $movie = new Movie();
         $form =$this->initNewForm($movie);
@@ -110,8 +118,6 @@ class MovieController extends Controller
 
     }
 
-
-
     /**
      * @param Movie $movie
      * @return mixed
@@ -127,14 +133,25 @@ class MovieController extends Controller
     }
 
 
-    public function detailsAction($movieId){
+    public function detailsAction($movieId,Request $request){
 
         $em = $this->getDoctrine()->getManager();
         $movie = $em->getRepository('AppBundle:Movie')->find($movieId);
 
+        $subscription = new Subscription();
+
+        $subscription->setMovie($movie);
+
+        $form = $this->createFormBuilder($subscription)
+            ->setAction($this->generateUrl('savesubscribe'))
+            ->add('movie', HiddenType ::class  )
+            ->add('email_address', EmailType::class, array( 'attr' => array('placeholder' => 'Email Address')))
+            ->add('save', SubmitType::class, array('label' => 'Subscribe'))
+            ->getForm();
+
         return $this->render('movie/details.html.twig', array(
            "movie" => $movie,
-
+           "form" => $form->createView(),
         ));
 
     }

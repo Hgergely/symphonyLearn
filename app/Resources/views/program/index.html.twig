@@ -2,11 +2,17 @@
 {% extends '::base.html.twig' %}
 {% block body %}
 
-
-    {% if insertResult == 1 %}
+    {% if insertResult == "success" %}
         <div class="alert alert-success  in alert-dismissable" style="margin-top:18px;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
             <strong>Success!</strong> The program has been successfully added.
+        </div>
+    {% endif %}
+
+    {% if insertResult == "taken" %}
+        <div class="alert alert-danger in alert-dismissable" style="margin-top:18px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            <strong>Warning</strong> You have tried to set a program but the selected interval has been already allocated.
         </div>
     {% endif %}
 
@@ -15,7 +21,7 @@
 
         <div class="row formRow">
             <div class="text-center col">
-                <h4>Set new program </h4>
+                <h4>{% trans %}Set new program{% endtrans %} </h4>
             </div>
         </div>
 

@@ -48,25 +48,31 @@ class ProgramController extends Controller
             // $form->getData() holds the submitted values
 
             //check for time overlapping
-
             $movie = $program->getMovie();
-            $duration = $movie->getDuration();
-            $finish = clone($program->getDatetime());
 
-            $finish->add(new \DateInterval('PT' . $duration . 'M'));
-            $program->setFinish($finish);
+            if($this->checkforOverlapping(clone($program->getDatetime()),$movie->getDuration())){
+                $insertResult = "taken";
+            }else{
 
-            $program->setFinish($finish);
+                $duration = $movie->getDuration();
+                $finish = clone($program->getDatetime());
 
-            $post=$form->getData();
+                $finish->add(new \DateInterval('PT' . $duration . 'M'));
+                $program->setFinish($finish);
+
+                $program->setFinish($finish);
+
+                $post=$form->getData();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($program);
                 $em->flush();
 
+                $insertResult="success";
 
-            $insertResult=true;
+                //init empty form
 
-            //init empty form
+            }
+
             $program = new Program();
             $form =$this->initNewForm($program);
 
@@ -86,28 +92,52 @@ class ProgramController extends Controller
         ));
     }
 
-//        function checkforOverlapping(){
-//
-//            $em = $this->getDoctrine()->getManager();
-//            $query = $em->createQuery(
-//                '
-//            select m.id, datetime,  duration, UNIX_TIMESTAMP(datetime) as Mstart,
-//            UNIX_TIMESTAMP(DATE_ADD(datetime, INTERVAL duration+15 MINUTE )) as Mfinish
-//            from AppBundle:program p
-//            join AppBundle:movie m on p.movie_id = m.id
-//            where  date(datetime) = date("2017-07-07 22:30:00")  AND 1= :ONE
-//            having UNIX_TIMESTAMP("2017-07-07 22:30:00") BETWEEN Mstart and Mfinish
-//            and UNIX_TIMESTAMP(DATE_ADD("2017-07-07 22:30:00", INTERVAL "10" MINUTE )) BETWEEN Mstart and Mfinish
-//            '
-//            )->setParameter('ONE', 1);
-//
-//            $result = $query->getResult();
-//
-//            var_dump($result);
-//
-//            return true;
-//
-//    }
+        function checkforOverlapping($startDateObj, $duration){
+
+
+            //clone obj
+            $finishdate= clone($startDateObj);
+
+            //add 15 min time margin
+            //$startDateObj->sub(new \DateInterval('PT15M'));
+
+            //$shifted = 'PT' . ($duration+15) . 'M';
+            //$finishdate->add(new \DateInterval($shifted));
+
+            if ((int)$startDateObj->format('H')<8){
+                return true;
+
+            }
+
+            if ((int)$finishdate->format('H')>=22 || (int)$finishdate->format('H')<8){
+                return true;
+
+            }
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            $query = $em->createQuery(
+                'select p
+                from AppBundle:program  p
+                where :startDateTime BETWEEN  p.datetime  and p.finish
+                or :finishDateTime BETWEEN p.datetime and p.finish '
+            )->setParameters(
+                array(
+                    "startDateTime"=>$startDateObj->format('Y-m-d H:i:s'),
+                    "finishDateTime"=>$finishdate->format('Y-m-d H:i:s'),
+                    )
+            );
+
+
+          $result = $query->getResult();
+
+
+
+            if (empty($result)) return false;
+            else return true;
+
+    }
 
     public function programPartialAction($weekOffset){
 
@@ -177,7 +207,7 @@ class ProgramController extends Controller
 
             ->add('movie', EntityType::class, array(
                 'class' => 'AppBundle:Movie',
-                'choice_label' => 'title',
+                'property' => 'label',
                 ))
             ->add('datetime', DateTimeType::class)
             ->add('save', SubmitType::class, array('label' => 'Add Program'))

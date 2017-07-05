@@ -31,6 +31,10 @@ movieDetails:
 programPartial :
     path:     /program/programPartial/{weekOffset}
     defaults: { _controller: AppBundle:Program:programPartial }
+
+savesubscribe :
+    path:     /subscribe/save/
+    defaults: { _controller: AppBundle:Subscribe:save }
 #index:
 #    path:     /index/index
 #    defaults: { _controller: AppBundle:Program:index }

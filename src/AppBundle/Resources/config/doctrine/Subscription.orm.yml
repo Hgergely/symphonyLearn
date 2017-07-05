@@ -1,0 +1,33 @@
+AppBundle\Entity\Subscription:
+    type: entity
+    table: subscription
+    indexes:
+        movie_id:
+            columns:
+                - movie_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        emailAddress:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            column: email_address
+    manyToOne:
+        movie:
+            targetEntity: Movie
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                movie_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

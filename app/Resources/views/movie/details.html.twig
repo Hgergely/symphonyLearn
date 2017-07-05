@@ -1,7 +1,9 @@
 
 {% block body %}
+
 <div class="modal-dialog">
     <div class="modal-content">
+        {{ form_start(form, {'attr': {'id': 'subscribeForm'}}) }}
         <div class="modal-header">
             <h5 class="modal-title">
                 <h5><div id="movieTitle">{{ movie.title }}</div></h5>
@@ -9,16 +11,31 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
         </div>
+
+
+
         <div class="modal-body">
+
+            <div class="subscription alert alert-success hidden in alert-dismissable" style="margin-top:18px;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                <strong>Success!</strong> Your subscription has been set
+            </div>
+
+            <div class="subscription alert alert-danger hidden in alert-dismissable" style="margin-top:18px;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                <strong>Errror!</strong> Something went wrong
+            </div>
+
             <div id="movieDescription">{{ movie.description }}</div>
             <br>
             <div id="movieDuration">{{ movie.duration }} min</div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Subscribe</button>
+            {{ form_widget(form.email_address) }}
 
+            {{ form_widget(form.save, {'attr': {'class': 'subscription btn btn-primary-green'}}) }}
         </div>
+        {{ form_end(form) }}
     </div>
 </div>
 {% endblock %}
