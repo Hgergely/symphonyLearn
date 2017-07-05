@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Program;
+use AppBundle\Entity\Movie;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,6 +33,9 @@ class ProgramController extends Controller
     public function indexAction(Request $request)
     {
 
+//        $this->checkforOverlapping();
+//        die;
+
         $insertResult=null;
         $program = new Program();
 
@@ -43,14 +47,22 @@ class ProgramController extends Controller
 
             // $form->getData() holds the submitted values
 
-            try {
-                $post=$form->getData();
+            //check for time overlapping
+
+            $movie = $program->getMovie();
+            $duration = $movie->getDuration();
+            $finish = clone($program->getDatetime());
+
+            $finish->add(new \DateInterval('PT' . $duration . 'M'));
+            $program->setFinish($finish);
+
+            $program->setFinish($finish);
+
+            $post=$form->getData();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($program);
                 $em->flush();
-            } catch(\Doctrine\DBAL\DBALException $e) {
-                $insertResult=false;
-            }
+
 
             $insertResult=true;
 
@@ -73,6 +85,29 @@ class ProgramController extends Controller
 
         ));
     }
+
+//        function checkforOverlapping(){
+//
+//            $em = $this->getDoctrine()->getManager();
+//            $query = $em->createQuery(
+//                '
+//            select m.id, datetime,  duration, UNIX_TIMESTAMP(datetime) as Mstart,
+//            UNIX_TIMESTAMP(DATE_ADD(datetime, INTERVAL duration+15 MINUTE )) as Mfinish
+//            from AppBundle:program p
+//            join AppBundle:movie m on p.movie_id = m.id
+//            where  date(datetime) = date("2017-07-07 22:30:00")  AND 1= :ONE
+//            having UNIX_TIMESTAMP("2017-07-07 22:30:00") BETWEEN Mstart and Mfinish
+//            and UNIX_TIMESTAMP(DATE_ADD("2017-07-07 22:30:00", INTERVAL "10" MINUTE )) BETWEEN Mstart and Mfinish
+//            '
+//            )->setParameter('ONE', 1);
+//
+//            $result = $query->getResult();
+//
+//            var_dump($result);
+//
+//            return true;
+//
+//    }
 
     public function programPartialAction($weekOffset){
 

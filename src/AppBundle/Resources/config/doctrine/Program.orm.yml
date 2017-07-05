@@ -16,7 +16,10 @@ AppBundle\Entity\Program:
     fields:
         datetime:
             type: datetime
-            nullable: true
+            nullable: false
+        finish:
+            type: datetime
+            nullable: false
     manyToOne:
         movie:
             targetEntity: Movie

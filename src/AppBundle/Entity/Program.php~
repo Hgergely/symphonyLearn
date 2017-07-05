@@ -98,32 +98,4 @@ class Program
     {
         return $this->movie;
     }
-    /**
-     * @var \DateTime
-     */
-    private $finish;
-
-
-    /**
-     * Set finish
-     *
-     * @param \DateTime $finish
-     * @return Program
-     */
-    public function setFinish($finish)
-    {
-        $this->finish = $finish;
-
-        return $this;
-    }
-
-    /**
-     * Get finish
-     *
-     * @return \DateTime 
-     */
-    public function getFinish()
-    {
-        return $this->finish;
-    }
 }

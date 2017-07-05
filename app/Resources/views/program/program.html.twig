@@ -39,25 +39,22 @@
 
                             {% for program in programs %}
 
-
                                 {% if  day.display == program.datetime.format('Y-m-d') %}
                                     {%  set duration = program.datetime.format('H')*30 + program.datetime.format('i')/2 - 240 %}
                                     <div class="program" refId="{{ program.movie.getId() }}"
-                                         style=" position: absolute;
-                                                 height:  {{ program.movie.getDuration()/2 }}px;
+                                         style=" height:  {{ program.movie.getDuration()/2 }}px;
                                                  top: {{ duration }}px;">
 
-                                        <div style="float:left; padding: 1px;  font-size: 0.7vw;">
+                                        <div class="program-title" >
                                             <strong>{{ program.movie.getTitle() }}</strong>
                                             ({{ program.datetime.format("H:i") }})
                                             {{ program.movie.getDuration() }} min
                                         </div>
-
-
                                     </div>
-
                                 {% endif %}
+
                             {% endfor %}
+
                         </div>
                     </div>
                 </div>

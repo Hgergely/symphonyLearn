@@ -10,6 +10,7 @@ $(document).ready(function(){
 
         var refId = $(this).attr("refId")
 
+        $("#loaderSpimner").show()
         $.ajax({
             type: "GET",
             url: "/movie/delete/" + refId,
@@ -17,10 +18,12 @@ $(document).ready(function(){
 
                 $(".listRow[refId="+refId+"]").slideUp()
                 console.log("success")
+                $("#loaderSpimner").hide()
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('Error : ' + errorThrown);
+                $("#loaderSpimner").hide()
             }
 
         })
@@ -29,17 +32,20 @@ $(document).ready(function(){
     $(document).on("click",".WeekChange",function(){
 
         var offset = $(this).attr("offset")
+        $("#loaderSpimner").show()
         $.ajax({
             type: "GET",
             url: "/program/programPartial/" + offset,
             success: function (data, dataType) {
 
                 $("#programWrapper").html(data)
+                $("#loaderSpimner").hide()
 
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('Error : ' + errorThrown);
+                $("#loaderSpimner").hide()
             }
 
         })
@@ -49,6 +55,7 @@ $(document).ready(function(){
     $(document).on("click",".program",function(){
 
         var refId = $(this).attr("refId")
+        $("#loaderSpimner").show()
         $.ajax({
             type: "GET",
             url: "/movie/details/" + refId,
@@ -56,11 +63,13 @@ $(document).ready(function(){
 
                $("#myModal").html(data);
                $("#myModal").modal('show');
+                $("#loaderSpimner").hide()
 
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('Error : ' + errorThrown);
+                $("#loaderSpimner").hide()
             }
 
         })
